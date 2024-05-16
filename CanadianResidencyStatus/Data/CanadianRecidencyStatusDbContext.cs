@@ -138,7 +138,7 @@ namespace CanadianResidencyStatus.Data
                 new Resident
                 {
                     Id = 1,
-                    Name = "Olatunde",
+                    Name = "Lawal Hammed",
                     Address = "Woodbine Ave",
                     DateOfEntry = DateTime.Now, // using as an example
                     PostalCode = "P34 678",
