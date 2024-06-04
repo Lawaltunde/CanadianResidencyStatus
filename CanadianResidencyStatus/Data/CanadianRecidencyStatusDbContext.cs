@@ -18,7 +18,8 @@ namespace CanadianResidencyStatus.Data
         {
             base.OnModelCreating(modelBuilder);
             //Country entity
-            modelBuilder.Entity<Country>().HasData(new Country
+            modelBuilder.Entity<Country>().HasData(
+                new Country
                 { 
                     Id = 1,
                     Name = "Nigeria",
@@ -51,7 +52,13 @@ namespace CanadianResidencyStatus.Data
            );
 
             //Job entity
-            modelBuilder.Entity<Job>().HasData(
+            modelBuilder.Entity<Job>()
+                .Property(j => j.Wages)
+                .HasColumnType("decimal(18, 2)")
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Job>()
+                .HasData(
                 new Job
                 {
                     Id = 1,

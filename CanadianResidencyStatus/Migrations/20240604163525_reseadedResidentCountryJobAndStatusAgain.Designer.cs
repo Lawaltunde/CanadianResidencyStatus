@@ -4,6 +4,7 @@ using CanadianResidencyStatus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanadianResidencyStatus.Migrations
 {
     [DbContext(typeof(CanadianRecidencyStatusDbContext))]
-    partial class CanadianRecidencyStatusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240604163525_reseadedResidentCountryJobAndStatusAgain")]
+    partial class reseadedResidentCountryJobAndStatusAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,8 +97,7 @@ namespace CanadianResidencyStatus.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Wages")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -105,7 +107,7 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2158),
+                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9858),
                             JobName = "Software Engineer",
                             Position = "Senior Developer",
                             Status = "Currently Employed",
@@ -114,7 +116,7 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 2,
-                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2207),
+                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9917),
                             JobName = "Software Engineer",
                             Position = "CTO",
                             Status = "Currently Employed",
@@ -123,7 +125,7 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 3,
-                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2210),
+                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9920),
                             JobName = "Designer",
                             Position = "UI",
                             Status = "Currently Employed",
@@ -132,7 +134,7 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 4,
-                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2212),
+                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9925),
                             JobName = "Software Engineer",
                             Position = "Cloud Engineer",
                             Status = "Currently Employed",
@@ -141,7 +143,7 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 5,
-                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2215),
+                            DateOfEmployment = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9930),
                             JobName = "Software Engineer",
                             Position = "Tester",
                             Status = "Currently Employed",
@@ -204,7 +206,7 @@ namespace CanadianResidencyStatus.Migrations
                             Address = "Woodbine Ave",
                             City = "Sudbury",
                             CountryId = 1,
-                            DateOfEntry = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2340),
+                            DateOfEntry = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(125),
                             JobId = 1,
                             Name = "Lawal Hammed",
                             PostalCode = "P34 678",
@@ -218,7 +220,7 @@ namespace CanadianResidencyStatus.Migrations
                             Address = "King Street Profoundus",
                             City = "Sudbury",
                             CountryId = 2,
-                            DateOfEntry = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2347),
+                            DateOfEntry = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(133),
                             JobId = 2,
                             Name = "Anjelo",
                             PostalCode = "P34 678",
@@ -232,7 +234,7 @@ namespace CanadianResidencyStatus.Migrations
                             Address = "Toronto",
                             City = "Sudbury",
                             CountryId = 3,
-                            DateOfEntry = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2350),
+                            DateOfEntry = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(136),
                             JobId = 3,
                             Name = "Bashiroh",
                             PostalCode = "P34 678",
@@ -246,7 +248,7 @@ namespace CanadianResidencyStatus.Migrations
                             Address = "Larch",
                             City = "Sudbury",
                             CountryId = 4,
-                            DateOfEntry = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2353),
+                            DateOfEntry = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(140),
                             JobId = 4,
                             Name = "Ashish",
                             PostalCode = "P5M 678",
@@ -260,7 +262,7 @@ namespace CanadianResidencyStatus.Migrations
                             Address = "Cambrian Residence",
                             City = "Sudbury",
                             CountryId = 5,
-                            DateOfEntry = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2356),
+                            DateOfEntry = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(143),
                             JobId = 5,
                             Name = "Dade",
                             PostalCode = "P6B 390",
@@ -292,31 +294,31 @@ namespace CanadianResidencyStatus.Migrations
                         new
                         {
                             Id = 1,
-                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2251),
+                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9965),
                             StatusName = "Citizen"
                         },
                         new
                         {
                             Id = 2,
-                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2254),
+                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9968),
                             StatusName = "Permanent Resident"
                         },
                         new
                         {
                             Id = 3,
-                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2256),
+                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 35, 24, 676, DateTimeKind.Local).AddTicks(9970),
                             StatusName = "Study Permit"
                         },
                         new
                         {
                             Id = 4,
-                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2312),
+                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(88),
                             StatusName = "Work Permit"
                         },
                         new
                         {
                             Id = 5,
-                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 55, 58, 64, DateTimeKind.Local).AddTicks(2314),
+                            StatusExpiringDate = new DateTime(2024, 6, 4, 12, 35, 24, 677, DateTimeKind.Local).AddTicks(91),
                             StatusName = "Visitor"
                         });
                 });

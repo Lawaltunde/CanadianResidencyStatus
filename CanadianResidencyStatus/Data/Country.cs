@@ -6,6 +6,6 @@
         public string Name { get; set; }
         public string ShortName { get; set; }
 
-        public virtual List<Resident> Residents { get; set; }
+        public virtual IList<Resident> Residents { get; set; }
     }
 }

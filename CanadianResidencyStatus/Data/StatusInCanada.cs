@@ -6,6 +6,6 @@
         public string StatusName { get; set; }
         public DateTime StatusExpiringDate { get; set; }
 
-        public virtual List<Resident> Residents { get; set; }
+        public virtual IList<Resident> Residents { get; set; }
     }
 }

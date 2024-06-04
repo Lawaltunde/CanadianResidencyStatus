@@ -17,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Enabling our API to be accessible by clients that are not on the same server (CORS)
+
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAll",
     b => b.AllowAnyHeader()
@@ -35,11 +36,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
+
+
 
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
+
 app.UseCors("AllowAll");
 
 app.UseAuthorization();

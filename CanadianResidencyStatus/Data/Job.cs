@@ -9,7 +9,7 @@
         public Decimal Wages { get; set; }
         public DateTime DateOfEmployment { get; set; }
 
-        public virtual List<Resident> Residents { get; set; }
+        public virtual IList<Resident> Residents { get; set; }
 
     }
 }
