@@ -1,3 +1,4 @@
+using CanadianResidencyStatus.Configurations;
 using CanadianResidencyStatus.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -28,6 +29,7 @@ builder.Services.AddCors(options => {
 
 //integrating the serilog installed
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 var app = builder.Build();
 

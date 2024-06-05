@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CanadianResidencyStatus.Data;
 using CanadianResidencyStatus.Models.Country;
+using AutoMapper;
 
 namespace CanadianResidencyStatus.Controllers
 {
@@ -15,10 +16,12 @@ namespace CanadianResidencyStatus.Controllers
     public class CountriesController : ControllerBase
     {
         private readonly CanadianRecidencyStatusDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CountriesController(CanadianRecidencyStatusDbContext context)
+        public CountriesController(CanadianRecidencyStatusDbContext context, IMapper mapper)
         {
             _context = context;
+            this._mapper = mapper;
         }
 
         // GET: api/Countries
@@ -76,13 +79,9 @@ namespace CanadianResidencyStatus.Controllers
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Country>> PostCountry(CreateCountryDto createCountry)
+        public async Task<ActionResult<Country>> PostCountry(CreateCountryDto createCountryDto)
         {
-            var country = new Country()
-            {
-                Name = createCountry.Name,
-                ShortName = createCountry.ShortName
-            };
+            var country = _mapper.Map<Country>(createCountryDto);
 
             _context.countries.Add(country);
             await _context.SaveChangesAsync();
