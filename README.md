@@ -39,4 +39,4 @@ To retrieve the details of a resident with "Id = 1":
 
 <img width="295" alt="view 3" src="https://github.com/Lawaltunde/CanadianResidencyStatus/assets/122512872/27b48527-fe0a-40bd-a7f9-c62d2179dfaa">
 
-Other operations can also be performed on the API. The status code of zero indicates that everything is working correctly.
+Other operations can also be performed on the API. The status code of 200 indicates that everything is working correctly.
