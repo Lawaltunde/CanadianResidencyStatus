@@ -2,169 +2,122 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CanadianResidencyStatus.Data;
+using AutoMapper;
+using CanadianResidencyStatus.Models.Resident;
+using CanadianResidencyStatus.Models.Country;
+using System.Diagnostics.Metrics;
 
 namespace CanadianResidencyStatus.Controllers
 {
-    public class ResidentsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ResidentsController : ControllerBase
     {
         private readonly CanadianRecidencyStatusDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ResidentsController(CanadianRecidencyStatusDbContext context)
+        public ResidentsController(CanadianRecidencyStatusDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: Residents
-        public async Task<IActionResult> Index()
+        // GET: api/Residents
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetResidentDto>>> Getresidents()
         {
-            var canadianRecidencyStatusDbContext = _context.residents.Include(r => r.country).Include(r => r.job).Include(r => r.status);
-            return View(await canadianRecidencyStatusDbContext.ToListAsync());
+            var residents = await _context.residents.ToListAsync();
+            var records = _mapper.Map<List<GetResidentDto>>(residents);
+            return Ok(records);
         }
 
-        // GET: Residents/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Residents/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ResidentDto>> GetResident(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var resident = await _context.residents.Include(q => q.country)
+                .FirstOrDefaultAsync(q => q.Id == id);
 
-            var resident = await _context.residents
-                .Include(r => r.country)
-                .Include(r => r.job)
-                .Include(r => r.status)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (resident == null)
             {
                 return NotFound();
             }
 
-            return View(resident);
+
+            var residentDto = _mapper.Map<ResidentDto>(resident);
+
+            return Ok(residentDto);
         }
 
-        // GET: Residents/Create
-        public IActionResult Create()
+        // PUT: api/Residents/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutResident(int id, UpdateResidentDto updateResidentDto)
         {
-            ViewData["CountryId"] = new SelectList(_context.countries, "Id", "Id");
-            ViewData["JobId"] = new SelectList(_context.jobs, "Id", "Id");
-            ViewData["StatusId"] = new SelectList(_context.statusInCanada, "Id", "Id");
-            return View();
-        }
-
-        // POST: Residents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,Province,PostalCode,SIN,DateOfEntry,CountryId,JobId,StatusId")] Resident resident)
-        {
-            if (ModelState.IsValid)
+            if (id != updateResidentDto.Id)
             {
-                _context.Add(resident);
+                return BadRequest();
+            }
+
+            //_context.Entry(resident).State = EntityState.Modified;
+
+            var resident = await _context.residents.FindAsync(id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(updateResidentDto, resident);
+
+            try
+            {
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.countries, "Id", "Id", resident.CountryId);
-            ViewData["JobId"] = new SelectList(_context.jobs, "Id", "Id", resident.JobId);
-            ViewData["StatusId"] = new SelectList(_context.statusInCanada, "Id", "Id", resident.StatusId);
-            return View(resident);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ResidentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Residents/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resident = await _context.residents.FindAsync(id);
-            if (resident == null)
-            {
-                return NotFound();
-            }
-            ViewData["CountryId"] = new SelectList(_context.countries, "Id", "Id", resident.CountryId);
-            ViewData["JobId"] = new SelectList(_context.jobs, "Id", "Id", resident.JobId);
-            ViewData["StatusId"] = new SelectList(_context.statusInCanada, "Id", "Id", resident.StatusId);
-            return View(resident);
-        }
-
-        // POST: Residents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: api/Residents
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,Province,PostalCode,SIN,DateOfEntry,CountryId,JobId,StatusId")] Resident resident)
+        public async Task<ActionResult<Resident>> PostResident(CreateResidentDto createResidentDto)
         {
-            if (id != resident.Id)
-            {
-                return NotFound();
-            }
+            var resident = _mapper.Map<Resident>(createResidentDto);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(resident);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ResidentExists(resident.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CountryId"] = new SelectList(_context.countries, "Id", "Id", resident.CountryId);
-            ViewData["JobId"] = new SelectList(_context.jobs, "Id", "Id", resident.JobId);
-            ViewData["StatusId"] = new SelectList(_context.statusInCanada, "Id", "Id", resident.StatusId);
-            return View(resident);
+            _context.residents.Add(resident);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetResident", new { id = resident.Id }, resident);
         }
 
-        // GET: Residents/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // DELETE: api/Residents/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteResident(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resident = await _context.residents
-                .Include(r => r.country)
-                .Include(r => r.job)
-                .Include(r => r.status)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var resident = await _context.residents.FindAsync(id);
             if (resident == null)
             {
                 return NotFound();
             }
 
-            return View(resident);
-        }
-
-        // POST: Residents/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var resident = await _context.residents.FindAsync(id);
-            if (resident != null)
-            {
-                _context.residents.Remove(resident);
-            }
-
+            _context.residents.Remove(resident);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool ResidentExists(int id)

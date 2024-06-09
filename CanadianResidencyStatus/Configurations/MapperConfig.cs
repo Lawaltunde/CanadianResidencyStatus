@@ -26,8 +26,10 @@ namespace CanadianResidencyStatus.Configurations
             CreateMap<StatusInCanada, StatusInCanadaDto>().ReverseMap();
             CreateMap<StatusInCanada, UpdateStatusInCanadaDto>().ReverseMap();
 
-
+            CreateMap<Resident, CreateResidentDto>().ReverseMap();
+            CreateMap<Resident, GetResidentDto>().ReverseMap();
             CreateMap<Resident, ResidentDto>().ReverseMap();
+            CreateMap<Resident, UpdateResidentDto>().ReverseMap();
         }
 
     }
