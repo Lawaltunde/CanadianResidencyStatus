@@ -3,6 +3,7 @@ using CanadianResidencyStatus.Data;
 using CanadianResidencyStatus.Models.Country;
 using CanadianResidencyStatus.Models.Job;
 using CanadianResidencyStatus.Models.Resident;
+using CanadianResidencyStatus.Models.StatusInCanada;
 
 namespace CanadianResidencyStatus.Configurations
 {
@@ -19,6 +20,11 @@ namespace CanadianResidencyStatus.Configurations
             CreateMap<Job, GetJobDto>().ReverseMap();
             CreateMap<Job, JobDto>().ReverseMap();
             CreateMap<Job, UpdateJobDto>().ReverseMap();
+
+            CreateMap<StatusInCanada, CreateStatusInCanadaDto>().ReverseMap();
+            CreateMap<StatusInCanada,  GetStatusInCanadaDto>().ReverseMap();
+            CreateMap<StatusInCanada, StatusInCanadaDto>().ReverseMap();
+            CreateMap<StatusInCanada, UpdateStatusInCanadaDto>().ReverseMap();
 
 
             CreateMap<Resident, ResidentDto>().ReverseMap();
