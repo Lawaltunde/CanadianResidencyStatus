@@ -8,12 +8,65 @@ The CanadianResidencyStatus API is a dynamic API developed using .NET Core and E
 The API leverages the MVC (Model-View-Controller) architecture of .NET Core, though it excludes the View component since it is an API. The API includes Swagger for UI display, though POSTman can  be used to test the API instead.
  
 
-Setting Up the API:
+*Introduction*
+This documentation provides a detailed overview of the API endpoints available in the CanadianResidencyStatus application, including models and controllers, deployed to Microsoft Azure. The API facilitates operations on countries, jobs, residents, and status in Canada.
 
-The API includes third-party application called Cross-Origin Resource Sharing (CORS), allowing the API to be accessible by clients on different servers. Image below is a code snippet extracted from program.cs demonstrating the integration of CORS into the application.
+*Base URL*
 
-<img width="563" alt="CORS" src="https://github.com/Lawaltunde/CanadianResidencyStatus/assets/122512872/7dd7270d-cd52-4fff-bfc1-460a8bdc7565">
-To enable CORS in the application, you must activate the relevant policy in your program.
+The base URL for accessing the API is  https://canadianresidencystatusapi-hammed.azurewebsites.net/swagger/v1/swagger.json
+Base URL
+
+The base URL for accessing the API is  https://canadianresidencystatusapi-hammed.azurewebsites.net/swagger/v1/swagger.json
+
+*Getting Started*
+To interact with the API, use tools such as Swagger (which is conveniently accessible via the URL: https://canadianresidencystatusapi-hammed.azurewebsites.net/Swagger), Postman, or any HTTP client library like HttpClient in .NET, axios in JavaScript, or requests in Python. 
+
+*Common HTTP Status Codes*
+200 OK: The request was successful.
+201 Created: A resource was successfully created.
+204 No Content: The request was successful, but there is no content to send in the response.
+400 Bad Request: The request was invalid.
+404 Not Found: The requested resource was not found.
+
+
+
+*API Endpoints*
+
+#### Countries
+
+##### GET: API/Countries
+
++ Description: Retrieves a list of all countries.
++ Response: 200 OK with a list of GetCountryDto.
+
++ Example: 
+
++ GET with swagger UI : canadianresidencystatusapi-hammed.azurewebsites.net
++ Raw date : canadianresidencystatusapi-hammed.azurewebsites.net/api/Countries
+
+
+##### GET: /api/Countries/{id}
+
++ Description: Retrieves details of a specific country by ID where id can be any number between 1 - 5 based on the seeded data, Put endpoint can be utilized to add additional data..
++ Response: 200 OK with CountryDto or 404 Not Found.
+
++ Example:
++ GET : https://canadianresidencystatusapi-hammed.azurewebsites.net/api/Countries/1
+
+##### POST: /api/Countries
+
++ Description: Creates a new country.
++ Request Body: CreateCountryDto
++ Response: 201 Created with the created Country.
+
++ Example: Use the link to the swagger UI.
+
+##### DELETE: /api/Countries/{id}
++ Description: Deletes a specific country by ID.
++ Response: 204 No Content or 404 Not Found.
++ Example: Check the video attached to this documentation.
++ In addition, a brief illustration of how to integrate all the endpoints of the API can be found in the attached video.
+
 
 **Model-View-Controller (MVC) Architecture**
 
